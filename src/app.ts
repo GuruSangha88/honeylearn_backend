@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth.routes";
 import cors from "cors";
 import dotenv from "dotenv";
 import { errorHandler } from "./middleware/errorHandler";
+import courseRoutes from "./routes/course.routes";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.get("/", (_req, res) => {
 
 // Prefix all auth routes with /api/auth
 app.use("/api", authRoutes);
+app.use("/api", courseRoutes);
 
 app.use(errorHandler);
 

@@ -33,7 +33,8 @@ export const getParentDetails = async (
       status: true,
       parent: {
         id: parent.id,
-        name: parent.name,
+        firstName: parent.firstName,
+        lastName: parent.lastName,
         email: parent.email,
         role: parent.user?.role,
         students: parent.user?.students || [],

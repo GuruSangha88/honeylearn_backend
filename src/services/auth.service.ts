@@ -11,12 +11,14 @@ export const registerUser = async ({
   email,
   password,
   role = "parent",
-  name,
+  firstName,
+  lastName,
 }: {
   email: string;
   password: string;
   role?: "parent" | "admin";
-  name?: string;
+  firstName?: string;
+  lastName?: string;
 }) => {
   const existingEmail = await getExistingEmail(email);
   if (existingEmail.exists) {
@@ -34,7 +36,8 @@ export const registerUser = async ({
       data: {
         id: user.id,
         email: user.email,
-        name: name || "",
+        firstName: firstName || "",
+        lastName: lastName || "",
       },
     });
   }
@@ -46,7 +49,8 @@ export const registerUser = async ({
       id: user.id,
       email: user.email,
       role: user.role,
-      name: parent?.name,
+      firstName: parent?.firstName,
+      lastName: parent?.lastName,
     },
   };
 };
