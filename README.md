@@ -36,6 +36,12 @@ DATABASE_URL=postgresql://user:password@localhost:5432/yourdb
 JWT_SECRET=your_jwt_secret
 JWT_REFRESH_SECRET=your_refresh_secret
 ```
+You can generate secure secrets for `JWT_SECRET` and `JWT_REFRESH_SECRET` using this command:
+
+```sh
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
+Run it twice and use the outputs for each secret.
 
 ### 4. Run migrations
 
