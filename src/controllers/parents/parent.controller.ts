@@ -4,6 +4,7 @@ import prisma from "../../prisma/client";
 import { ApiError } from "../../utils/ApiError";
 import { addStudent } from "../../services/student.service";
 import { createStudentSchema } from "../../validations/studentSchema";
+import { create } from "domain";
 
 export const getParentDetails = async (
   req: Request,
@@ -37,6 +38,7 @@ export const getParentDetails = async (
         lastName: parent.lastName,
         email: parent.email,
         role: parent.user?.role,
+        createdAt: parent.createdAt,
         students: parent.user?.students || [],
       },
     });

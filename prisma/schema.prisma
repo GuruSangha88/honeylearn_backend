@@ -7,6 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum SectionType {
+  text
+  image
+  quiz
+  question
+  video
+}
+
+enum AgeGroup {
+  GROUP_5_6
+  GROUP_7_9
+  GROUP_10_12
+}
 model User {
   id            Int            @id @default(autoincrement())
   email         String         @unique
@@ -35,23 +48,27 @@ model Student {
   lastName       String
   birthday       DateTime
   createdAt      DateTime          @default(now())
-  updated_at     DateTime          @updatedAt
+  updated_at      DateTime          @updatedAt
   avatarUrl      String?
   points         Int               @default(0)
-  courseProgress Json              @default("{\"CAREER\": 0, \"SOCIAL\": 0, \"COOKING\": 0, \"MINDSET\": 0, \"HOME_MAINTENANCE\": 0}")
+  streakDays     Int               @default(0)
+  totalTimeSpent Int               @default(0) // in minutes
   ageGroup       AgeGroup          @default(GROUP_7_9)
+  courseProgress Json              @default("{}")
   parent         User              @relation(fields: [parentId], references: [id])
   progress       StudentProgress[]
+  dailyGoals     StudentDailyGoal[]
 }
 
 model StudentProgress {
   id                Int       @id @default(autoincrement())
   studentId         Int
   lessonId          Int
-  completedSections String[]
+  completedSections String[] // ✅ Good for storing completed section IDs
   completedAt       DateTime?
   createdAt         DateTime  @default(now())
   updated_at        DateTime  @updatedAt
+
   lesson            Lesson    @relation(fields: [lessonId], references: [id])
   student           Student   @relation(fields: [studentId], references: [id])
 
@@ -60,65 +77,92 @@ model StudentProgress {
   @@index([lessonId])
 }
 
+model StudentDailyGoal {
+  id              Int      @id @default(autoincrement())
+  studentId       Int
+  date            DateTime
+  targetMinutes   Int
+  completedMinutes Int
+  createdAt       DateTime @default(now())
+
+  student         Student  @relation(fields: [studentId], references: [id])
+
+  @@unique([studentId, date]) // One goal per day
+}
+
+
 model Course {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String?
-  category    String
-  points      Int      @default(0)
-  createdAt   DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  modules     Module[]
+  id              Int       @id @default(autoincrement())
+  title           String
+  description     String?
+  content         String?         //  New optional column added
+  category        String?
+  points          Int       @default(0)
+  imageUrl        String?
+  createdAt       DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  modules         Module[]
+
+  // Virtual fields like totalLessons and completedLessons will be computed in the API
 }
 
 model Module {
-  id          Int      @id @default(autoincrement())
-  title       String
-  courseId    Int
-  orderNumber Int
-  createdAt   DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  lessons     Lesson[]
-  course      Course   @relation(fields: [courseId], references: [id])
+  id         Int      @id @default(autoincrement())
+  courseId   Int
+  title      String?
+  lessons    Lesson[]
+  course     Course   @relation(fields: [courseId], references: [id])
 }
 
 model Lesson {
-  id          Int               @id @default(autoincrement())
-  title       String
-  description String?
-  orderNumber Int
-  videoUrl    String?
-  points      Int               @default(0)
-  createdAt   DateTime          @default(now())
-  updated_at  DateTime          @updatedAt
-  moduleId    Int
-  voiceIntro  String?
-  module      Module            @relation(fields: [moduleId], references: [id])
-  sections    LessonSection[]
-  progress    StudentProgress[]
+  id              Int               @id @default(autoincrement())
+  title           String
+  description     String?
+  orderNumber     Int
+  videoUrl        String?
+  points          Int               @default(0)
+  duration        Int?
+  completed       Boolean?
+  voiceIntro      String?
+  nextLessonId    Int?
+  moduleId        Int
+  createdAt       DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+
+  module          Module            @relation(fields: [moduleId], references: [id])
+
+  
+  nextLesson      Lesson?           @relation("NextLesson", fields: [nextLessonId], references: [id])
+  previousLessons Lesson[]          @relation("NextLesson")
+
+  sections        LessonSection[]
+  progress        StudentProgress[]
+
+  @@index([nextLessonId])
 }
+
 
 model LessonSection {
-  id          Int         @id @default(autoincrement())
-  lessonId    Int
-  content     Json
-  orderNumber Int
-  createdAt   DateTime    @default(now())
-  updated_at  DateTime    @updatedAt
-  type        SectionType
-  lesson      Lesson      @relation(fields: [lessonId], references: [id])
+  id                Int             @id @default(autoincrement())
+  lessonId          Int
+  title             String
+  audioUrl          String?
+  completed         Boolean?
+  durationInSeconds Int?
+  orderNumber       Int
+  type              SectionType
+  createdAt         DateTime        @default(now())
+  updated_at         DateTime        @updatedAt
+
+  lesson            Lesson          @relation(fields: [lessonId], references: [id])
+  contents          SectionContent[]
 }
 
-enum AgeGroup {
-  GROUP_5_6
-  GROUP_7_9
-  GROUP_10_12
-}
-
-enum SectionType {
-  TEXT
-  IMAGE
-  VIDEO
-  INTERACTIVE
-  VOICE
+model SectionContent {
+  id         Int             @id @default(autoincrement()) // or use cuid() if string preferred
+  sectionId  Int
+  type       SectionType
+  timing     Int
+  data       Json            // Expected to include fields like text, url, alt, question, options, correctAnswerIndex
+  section    LessonSection   @relation(fields: [sectionId], references: [id])
 }
