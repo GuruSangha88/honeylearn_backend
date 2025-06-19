@@ -28,7 +28,7 @@ export const register = async (
 
     // Use parsed data
     const result = await registerUser(parseResult.data);
-    res.status(201).json(result);
+    res.status(200).json(result);
   } catch (error) {
     next(error); // Send to centralized error handler
   }

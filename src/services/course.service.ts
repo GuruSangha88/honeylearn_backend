@@ -65,6 +65,7 @@ export const getAllCourseDetails = async () => {
   return courses.map(formatCourse);
 };
 
+
 // 👇 Formatter to match your desired JSON shape
 function formatCourse(course: any) {
   const allLessons = course.modules.flatMap((module: { lessons: any[] }) => module.lessons);

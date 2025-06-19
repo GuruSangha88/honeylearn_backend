@@ -7,3 +7,4 @@ dist/
 requirements.txt
 prisma/dev.db
 prisma/dev.db-journal
+package-lock.json
