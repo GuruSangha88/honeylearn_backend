@@ -99,6 +99,7 @@ model Course {
   category        String?
   points          Int       @default(0)
   imageUrl        String?
+  audioUrl        String?  
   createdAt       DateTime  @default(now())
   updated_at      DateTime  @updatedAt
   modules         Module[]

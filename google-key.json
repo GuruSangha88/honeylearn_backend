@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "complete-agency-463413-g8",
+  "private_key_id": "61698dc682c268ee213100f06085e168a31e5355",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDF7qiTszfn95oI\n08wtzWqD32tB/SqrNJpYTMPSVFL5yS7Bxi75fgci4xBwN3RtONB1JuY+Smjm0FTR\nh5KAJjzhqnrK1FqxfuuvMsaOARKm4i7PXLSYoLcrvVyVUoXvjoEe6kfnUt07OJiW\nuH5ieAJRuq4GKtiUOqWhxNMqmA6vy5pkdfyXVp//FkjclWOomctdIUhy6qxbss1Z\nvbm2EqiuKgQsjjLxFhW8dfMArxQUKHVZCPgD3fWNgZz5QYUXYPmFWlMeEMy/htqR\nKSyAEZ6xcF2lB7tP/c6OgMvrTogqLR6Cxgdq56i2JGW/b0n71o9lBwG5epOVVmCl\nmVzN6C39AgMBAAECggEADgVmfrQC4VVKXZa3T4VOJtJUVEPdWmxrBJdHheZATH6C\nZ+qkmDrjwYZpOzHKdxQ/vBTJ2Z7GyJb4czFR4O8Uf/3mHekmFY3Cn1IO+686xYSf\nQUQ1bNxxrVEINnG2mC41ml2JQ2s8zb2oHYErPsl2jJiXTEuLtRBkfE2nkcxcufon\nxefPzDmoviGM2cOovQyd5FkccIhZxgdzb07mH5FheXpnASmANS0wjCe7pmFmaqhU\na7fFvqgL9MDDzfrqvaIPdNIYgI1dNPUiLhdeVu5QqvO3v2HOlfN3K0iXZpRP12aY\nVAG6CJZZZw6MTHyg5xBO3m7YITABJm+iO7gJx1HP8QKBgQD4M2RtbTPb49oXyWS9\nIECMaCEMtZknKSlTWTpyTLTpgttu5YMFDvwEEzzjqHMVOXamYmmZ5JtEVHOdlSCc\nLGf8wcNxE4snQ8/5BartZJxCqhVZP+/u4IwUco/i4Nt4D8HBu9PgBt1DiHxf5Nwy\nDmcpbO+O0/uNXb4qXqtUlhPkBQKBgQDMJuPcv5MtHBLc/hjwYoBKSnHBnjrBzk2C\nyHEc+ynMzBUR+qu08gsyF+8YxI83kLwPiGjAOZM41G9EI/xBXS8h78+bZSgOEjw1\nYIG5bMIAnW7GWpXUOUqRrQHUNwxWH2nOSGPwSTFMiOSFulHyzkukWYtpFE4RB0Yf\nbbUuG+T7mQKBgEIULKCVekEIoH/EtnVDqOu4rVPc5TFv2/i8wLq9gUzJ8fHMWN13\n59CN7qANsNXtvpD9km/OVSgT89P4Z/4sNGMukwH/2gRSIYSC5cbeClwVPCnOw+ot\nDh5Dgds9UjDcwRD7GKWELlRUeghtvdH107FLt1unREmWs5JEMgkLC7ChAoGAB2xW\nlr1EjbxalzyKDZuXTJw+XKrzOf7VZK8DJemgEHlPPtMdkTvH2m9yWzUye/PAUtRD\n8tFlIAjhbtncH0hTIWnF48Ge3jwdgldbADILL9iJoZ7Dme7nXjqrOVszEKKdx0ls\nkN0odL75iD9JIYoMyBIVdqGtYQMhspzbnKyY++kCgYEAr3W30z32X1QmNIEg+ZtY\nlcwkQtHAgG23MVIq4+g3akdYfiiHXV5bfZfeJLr0u27zLyzMUr8h3OIkC1SiTVGf\n8kf5F5bdKANy9nJh1KMB9/Fq/zb3vslj60g23tE2VFaNnfrK7KL36fCp9uWf1XWN\njOrQ5oO7ptCMXcaV+K05ymM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "honey-learn-text-to-speech@complete-agency-463413-g8.iam.gserviceaccount.com",
+  "client_id": "105575507683254196449",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/honey-learn-text-to-speech%40complete-agency-463413-g8.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -97,7 +97,7 @@ function formatCourse(course: any) {
     };
   });
 
-  const completedLessons = formattedLessons.filter((l:any) => l.completed).length;
+  const completedLessons = formattedLessons.filter((l: any) => l.completed).length;
 
   return {
     id: course.id.toString(),
@@ -105,8 +105,88 @@ function formatCourse(course: any) {
     description: course.description || "",
     content: course.content || "",
     imageUrl: course.imageUrl || "",
+    audioUrl: course.audioUrl || "",
     totalLessons: formattedLessons.length,
     completedLessons,
     lessons: formattedLessons,
+  };
+}
+
+export const getCourseFullContents = async (courseId: number) => {
+  const course = await prisma.course.findUnique({
+    where: { id: courseId },
+    include: {
+      modules: {
+        include: {
+          lessons: {
+            include: {
+              sections: {
+                include: {
+                  contents: true,
+                },
+                orderBy: { orderNumber: "asc" },
+              },
+            },
+            orderBy: { orderNumber: "asc" },
+          },
+        },
+      },
+    },
+  });
+  return formatCourseForPrompt(course);
+};
+// function formatCourseFullContent(course: any) {
+//   if (!course) return null;
+//   // Flatten and format for prompt
+//   const formatted = {
+//     id: course.id,
+//     title: course.title,
+//     description: course.description,
+//     content: course.content,
+//     modules: course.modules.map((module: any) => ({
+//       id: module.id,
+//       title: module.title,
+//       lessons: module.lessons.map((lesson: any) => ({
+//         id: lesson.id,
+//         title: lesson.title,
+//         description: lesson.description,
+//         sections: lesson.sections.map((section: any) => ({
+//           id: section.id,
+//           title: section.title,
+//           type: section.type,
+//           audioUrl: section.audioUrl,
+//           contents: section.contents.map((content: any) => ({
+//             id: content.id,
+//             type: content.type,
+//             timing: content.timing,
+//             data: content.data,
+//           })),
+//         })),
+//       })),
+//     })),
+//   };
+// }
+function formatCourseForPrompt(course: any) {
+  return {
+    courseTitle: course.title,
+    courseDescription: course.description,
+    courseContent: course.content,
+    modules: course.modules.map((module: any) => ({
+      moduleTitle: module.title,
+      lessons: module.lessons.map((lesson: any) => ({
+        lessonTitle: lesson.title,
+        lessonDescription: lesson.description,
+        sections: lesson.sections.map((section: any) => ({
+          sectionTitle: section.title,
+          sectionType: section.type,
+          contents: section.contents
+            .filter((content: any) => content.type === "text")
+            .map((content: any) => ({
+              text: content.data.text,
+              audio: content.data.audioUrl, // Only include audio if needed
+            })),
+        })),
+      })),
+    })),
   };
 }
