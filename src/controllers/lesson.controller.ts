@@ -1,6 +1,6 @@
 //src/controllers/lesson.controller.ts
 import { Request, Response, NextFunction } from "express";
-import { getLessonById } from "../services/lession.service";
+import { getLessonById } from "../services/lesson.service";
 import { ApiError } from "../utils/ApiError";
 
 // export const getLesson = async (req: Request,

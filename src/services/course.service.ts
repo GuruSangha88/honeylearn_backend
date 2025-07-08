@@ -167,26 +167,20 @@ export const getCourseFullContents = async (courseId: number) => {
 //   };
 // }
 function formatCourseForPrompt(course: any) {
+  // Flatten all lessons from all modules
+  const allLessons = course.modules.flatMap((module: any) => module.lessons);
+
   return {
     courseTitle: course.title,
     courseDescription: course.description,
-    courseContent: course.content,
-    modules: course.modules.map((module: any) => ({
-      moduleTitle: module.title,
-      lessons: module.lessons.map((lesson: any) => ({
-        lessonTitle: lesson.title,
-        lessonDescription: lesson.description,
-        sections: lesson.sections.map((section: any) => ({
-          sectionTitle: section.title,
-          sectionType: section.type,
-          contents: section.contents
+    lessons: allLessons.map((lesson: any) => ({
+      lessonTitle: lesson.title,
+      lessonDescription: lesson.sections
+        .flatMap((section: any) =>
+          section.contents
             .filter((content: any) => content.type === "text")
-            .map((content: any) => ({
-              text: content.data.text,
-              audio: content.data.audioUrl, // Only include audio if needed
-            })),
-        })),
-      })),
+            .map((content: any) => content.data.text)
+        ),
     })),
   };
 }
